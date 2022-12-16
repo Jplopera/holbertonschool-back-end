@@ -5,26 +5,21 @@ import requests
 
 
 if __name__ == "__main__":
-    todo = 'https://jsonplaceholder.typicode.com/todos'
-    user = 'https://jsonplaceholder.typicode.com/users'
-    response_todo = requests.get(todo)
-    response_users = requests.get(user)
-
-    list_todo = list(todo.json())
-    list_users = list(user.json())
-
+    users = requests.get("https://jsonplaceholder.typicode.com/users").json()
     result_json = {}
-    for user in list_users:
-
-        list = []
-        for element in list_todo:
-            aux_dict = {}
-            aux_dict['username'] = user['username']
-            aux_dict['task'] = element['title']
-            aux_dict['completed'] = element['completed']
-
-            if user['id'] == element['userId']:
-                list.append(aux_dict)
+    dict_uname = {}
+    for user in users:
+        uid = user.get('id')
+        result_json[uid] = []
+        dict_uname[uid] = user.get('username')
+    todo = requests.get("https://jsonplaceholder.typicode.com/todos").json()
+    for element in todo:
+        taskdict = {}
+        uid = element.get('userId')
+        taskdict['task'] = element.get('title')
+        taskdict['completed'] = element.get('completed')
+        taskdict['username'] = dict_uname.get(uid)
+        result_json.get(uid).append(taskdict)
 
         result_json[user['id']] = list
 
