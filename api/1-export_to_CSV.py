@@ -11,18 +11,8 @@ if __name__ == "__main__":
     todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId={}"
                         .format(sys.argv[1])).json()
 
-    todo_list = list(todo.json())
-    name_list = list(user.json())
-
-    list = []
-    for element in todo_list:
-        i = []
-        i.append(str(element['userId']))
-        i.append(str(name_list[0]['username']))
-        i.append(str(element['completed']))
-        i.append(str(element['title']))
-        list.append(i)
-
-    with open("{}.csv".format(sys.argv[1]), 'w', newline='') as f:
-        write = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
-        write.writerows(list)
+    with open("{}.csv".format(sys.argv[1]), 'w', newline='') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+        for tasks in todo:
+            writer.writerow([int(sys.argv[1]), user.get(
+                'username'), tasks.get('completed'), tasks.get('title')])
