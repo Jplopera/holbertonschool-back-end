@@ -23,6 +23,6 @@ if __name__ == "__main__":
         i.append(str(element['title']))
         list.append(i)
 
-    with open("{}.csv".format(sys.argv[1]), 'w', newline='') as file:
-        write = csv.writer(file, quoting=csv.QUOTE_ALL)
+    with open("{}.csv".format(sys.argv[1]), 'w', newline='') as f:
+        write = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)
         write.writerows(list)
