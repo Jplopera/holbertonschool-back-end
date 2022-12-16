@@ -5,13 +5,13 @@ import requests
 
 
 if __name__ == "__main__":
-    user = requests.get("https://jsonplaceholder.typicode.com/users/{}"
-                        ).json()
-    todo = requests.get("https://jsonplaceholder.typicode.com/todos?userId={}"
-                        ).json()
+    todo = 'https://jsonplaceholder.typicode.com/todos'
+    user = 'https://jsonplaceholder.typicode.com/users'
+    response_todo = requests.get(todo)
+    response_users = requests.get(user)
 
-    list_todo = list(todo.json)
-    list_users = list(user.json)
+    list_todo = list(todo.json())
+    list_users = list(user.json())
 
     result_json = {}
     for user in list_users:
@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
             if user['id'] == element['userId']:
                 list.append(aux_dict)
+
         result_json[user['id']] = list
 
     s_json = json.dumps(result_json)
